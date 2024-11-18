@@ -2,6 +2,7 @@ package empapp;
 
 import empapp.dto.EmployeeDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employees")
 @AllArgsConstructor
+@Slf4j
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -31,6 +33,7 @@ public class EmployeeController {
     @PostMapping
     @SuppressWarnings("unused")
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto command) {
+        log.info("Creating employee2 : {}", command);
         EmployeeDto employeeDto = employeeService.createEmployee(command);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employeeDto.getId()).toUri()).body(employeeDto);
     }
