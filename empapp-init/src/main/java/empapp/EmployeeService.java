@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 @AllArgsConstructor
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    private EmployeeMapper employeeMapper;
+    private final EmployeeMapper employeeMapper;
 
     public EmployeeDto createEmployee(EmployeeDto command) {
         Employee employee = employeeMapper.toEmployee(command);
