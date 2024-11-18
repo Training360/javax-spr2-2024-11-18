@@ -38,7 +38,7 @@ PUT http://localhost:8080/api/employees/1
 Content-Type: application/json
 
 {
-  "name": "Jack Doe"
+  "name": "Jane Doe 2"
 }
 
 ### Delete

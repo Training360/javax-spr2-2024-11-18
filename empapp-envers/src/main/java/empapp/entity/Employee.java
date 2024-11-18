@@ -3,10 +3,13 @@ package empapp.entity;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
+
 import java.util.List;
 
 @Entity
 @Data
+@Audited
 public class Employee {
 
     @Id
