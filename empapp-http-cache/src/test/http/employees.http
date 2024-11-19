@@ -5,9 +5,13 @@ Accept: application/json
 
 ### Find employee by id
 
-GET http://localhost:8080/api/employees/5
+GET http://localhost:8080/api/employees/4
 Accept: application/json
 
+### ETag használata
+GET http://localhost:8080/api/employees/4
+Accept: application/json
+If-None-Match: "2"
 
 ### Create employee
 
@@ -34,7 +38,7 @@ Content-Type: application/json
 
 ### Update
 
-PUT http://localhost:8080/api/employees/1
+PUT http://localhost:8080/api/employees/4
 Content-Type: application/json
 
 {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -24,8 +25,14 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     @SuppressWarnings("unused")
-    public EmployeeDto findEmployeeById(@PathVariable("id") long id) {
-        return employeeService.findEmployeeById(id);
+    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable("id") long id) {
+        EmployeeDto employeeDto = employeeService.findEmployeeById(id);
+        return ResponseEntity
+                .ok()
+                .header("ResponseId", UUID.randomUUID().toString())
+//                .eTag(Integer.toString(employeeDto.hashCode()))
+                .eTag(Integer.toString(employeeDto.getVersion()))
+                .body(employeeDto); // build
     }
 
     @PostMapping

@@ -15,6 +15,9 @@ public class Employee {
 
     private String name;
 
+    @Version
+    private Integer version;
+
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Address> addresses;
 
