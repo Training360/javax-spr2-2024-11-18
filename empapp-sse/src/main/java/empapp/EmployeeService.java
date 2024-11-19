@@ -1,8 +1,10 @@
 package empapp;
 
 import empapp.dto.EmployeeDto;
+import empapp.dto.Message;
 import empapp.entity.Employee;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -16,10 +18,18 @@ public class EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     public EmployeeDto createEmployee(EmployeeDto command) {
         Employee employee = employeeMapper.toEmployee(command);
         employeeRepository.save(employee);
-        return employeeMapper.toEmployeeDto(employee);
+        EmployeeDto employeeDto = employeeMapper.toEmployeeDto(employee);
+
+        eventPublisher.publishEvent(new Message("Employee has been created %d %s"
+                .formatted(employeeDto.getId(), employeeDto.getName())
+        ));
+
+        return employeeDto;
     }
 
     public List<EmployeeDto> listEmployees() {
