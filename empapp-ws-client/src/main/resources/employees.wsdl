@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="https://training360.com/employees" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EmployeeWebServiceService" targetNamespace="https://training360.com/employees">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://training360.com/employees" elementFormDefault="unqualified" targetNamespace="https://training360.com/employees" version="1.0">
+
+  <xs:element name="findAllEmployees" type="tns:findAllEmployees"/>
+
+  <xs:element name="findAllEmployeesResponse" type="tns:findAllEmployeesResponse"/>
+
+  <xs:complexType name="findAllEmployees">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="findAllEmployeesResponse">
+    <xs:sequence>
+      <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="employee" type="tns:employeeWsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType final="extension restriction" name="employeeWsDto">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:long"/>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="findAllEmployeesResponse">
+    <wsdl:part element="tns:findAllEmployeesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findAllEmployees">
+    <wsdl:part element="tns:findAllEmployees" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EmployeeWebService">
+    <wsdl:operation name="findAllEmployees">
+      <wsdl:input message="tns:findAllEmployees" name="findAllEmployees">
+    </wsdl:input>
+      <wsdl:output message="tns:findAllEmployeesResponse" name="findAllEmployeesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployeeWebServiceServiceSoapBinding" type="tns:EmployeeWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findAllEmployees">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findAllEmployees">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findAllEmployeesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeeWebServiceService">
+    <wsdl:port binding="tns:EmployeeWebServiceServiceSoapBinding" name="EmployeeWebServicePort">
+      <soap:address location="http://localhost:8080/services/employees"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
