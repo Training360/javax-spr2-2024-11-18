@@ -1,6 +1,7 @@
 package empapp;
 
 import empapp.dto.EmployeeDto;
+import empapp.dto.EmployeeHasBeenCreatedMessage;
 import empapp.entity.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
@@ -24,8 +25,11 @@ public class EmployeeService {
         employeeRepository.save(employee);
         EmployeeDto employeeDto = employeeMapper.toEmployeeDto(employee);
 
-        jmsTemplate.send("employees-queue",
-                s -> s.createTextMessage("Employee has been created %d %s".formatted(employee.getId(), employee.getName())));
+//        jmsTemplate.send("employees-queue",
+//                s -> s.createTextMessage("Employee has been created %d %s".formatted(employee.getId(), employee.getName())));
+
+        jmsTemplate.convertAndSend("employees-queue",
+                new EmployeeHasBeenCreatedMessage(employeeDto.getId(), employeeDto.getName()));
 
         return employeeDto;
     }

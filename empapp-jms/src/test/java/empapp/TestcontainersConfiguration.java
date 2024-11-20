@@ -29,6 +29,7 @@ public class TestcontainersConfiguration {
     @Bean
     @ServiceConnection
     public ArtemisContainer artemisContainer() {
-        return new ArtemisContainer("apache/activemq-artemis:2.30.0-alpine");
+        return new ArtemisContainer("apache/activemq-artemis:2.30.0-alpine")
+                .withReuse(true);
     }
 }
