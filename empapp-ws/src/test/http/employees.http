@@ -57,3 +57,15 @@ Content-Type: application/xml
         </HelloRequest>
     </soapenv:Body>
 </soapenv:Envelope>
+
+### Web Service
+POST http://localhost:8080/services/employees
+Content-Type: application/xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <findAllEmployees xmlns="https://training360.com/employees"/>
+    </soap:Body>
+</soap:Envelope>
+
