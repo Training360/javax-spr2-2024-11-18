@@ -1,10 +1,8 @@
 package empapp;
 
 import empapp.dto.EmployeeDto;
-import empapp.dto.EmployeeHasBeenCreatedMessage;
 import empapp.entity.Employee;
 import lombok.AllArgsConstructor;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -18,20 +16,10 @@ public class EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
-    private final JmsTemplate jmsTemplate;
-
     public EmployeeDto createEmployee(EmployeeDto command) {
         Employee employee = employeeMapper.toEmployee(command);
         employeeRepository.save(employee);
-        EmployeeDto employeeDto = employeeMapper.toEmployeeDto(employee);
-
-//        jmsTemplate.send("employees-queue",
-//                s -> s.createTextMessage("Employee has been created %d %s".formatted(employee.getId(), employee.getName())));
-
-        jmsTemplate.convertAndSend("employees-queue",
-                new EmployeeHasBeenCreatedMessage(employeeDto.getId(), employeeDto.getName()));
-
-        return employeeDto;
+        return employeeMapper.toEmployeeDto(employee);
     }
 
     public List<EmployeeDto> listEmployees() {
